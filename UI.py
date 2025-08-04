@@ -1,6 +1,9 @@
-# user interface classes
+"""
+User Interface Classes
+"""
 
 # user interface class - interaction with user
+
 class UIClass:
 
     # attributes
@@ -18,17 +21,23 @@ class UIClass:
         print("C: View previous books")
 
     def option_a(self):
-        pass # relates to function in book_api.py
+        # display genre options, choose genre and get a new book. Will need the API for this function.
+        pass
 
-# user interface class - interaction with database -
+
+# user interface class - interaction with database
+
 class UIDatabaseClass:
     def add_to_book_tracker(self):
+        # will call on the book class and save the book data to the database, and add a deadline
         pass
 
     def option_b(self):
+        # function to view the current book and deadline in the database
         pass
 
     def option_c(self):
+        # function to view previous books read in the database
         pass
 
 def main():

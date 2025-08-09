@@ -42,24 +42,25 @@ def view_latest_book_db():
             print("DB connection is closed")
 
 
-def add_new_book_db(new_book_dict, book_title=None):
+def add_new_book_db(new_book_dict):
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
-        print("Connected to DB: %s" % DATABASE)
+        print(f"Connected to DB: {DATABASE}")
 
         print("ADD THIS BOOK TO DB:", new_book_dict)
 
-        query = """ INSERT INTO bookhistory (book_title, author, genre, assigned_date, deadline) VALUES"
-                  (%s, %s, %s, %s, %s) """
+        query = """ INSERT INTO BookHistory (Fk_member_id, book_title, author, genre, assigned_date, deadline) VALUES
+                  (%s, %s, %s, %s, %s, %s) """
 
+        fk_member_id = new_book_dict["fk_member_id"]
         title = new_book_dict["book_title"]
         author = new_book_dict["author"]
         genre = new_book_dict["genre"]
         assigned_date = new_book_dict["assigned_date"]
         deadline = new_book_dict["deadline"]
 
-        cur.execute(query, (book_title, author, genre, assigned_date, deadline))
+        cur.execute(query, (fk_member_id, title, author, genre, assigned_date, deadline))
 
         # Commit the transaction to make the changes in the database
         db_connection.commit()
@@ -68,8 +69,8 @@ def add_new_book_db(new_book_dict, book_title=None):
 
 
     except Exception as e:
-        print(e)
-        raise DbConnectionError("Failed to read data from DB")
+        print("Error adding book:", e)
+        raise DbConnectionError("Failed to insert data from DB")
 
     finally:
         if db_connection:

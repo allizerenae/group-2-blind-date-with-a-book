@@ -37,14 +37,33 @@ class UIClass:
 
     #Option A.  Function to get new book
     #Calls Open Library API
+    #Do we need this??!!!
     def get_new_book (self):
         pass
 
 
 # user interface class - interaction with database
+
 class UIDatabaseClass:
-    def add_to_book_tracker_UI(self):
-        endpoint1 = "http://127.0.0.1:5000/books/add"
+
+    #UI Database Class Attributes??
+
+    #Function to get new book data from book_api...
+    #....and pass to db_utils.
+    #data from book_api needs to turn into a dictoinary for use by db_utils
+    def create_new_book_dictionary_UI(self, title, author, subject):
+       new_book = {
+            'title': title,
+            'author': author,
+            'genre': subject
+        }
+       return new_book
+
+    def add_new_book_to_database_UI(self, new_book_dictionary):
+        endpoint1  = "http://127.0.0.1:5000/books/add"
+        new_book = requests.post(endpoint1, headers={'content-type':'application/json'},data=json.dumps(new_book_dictionary))
+        return new_book
+
 
 #option B.  Function to view current book and deadline
     def view_current_book_UI(self):

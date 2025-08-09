@@ -25,7 +25,7 @@ def view_latest_book_db():
         cur = db_connection.cursor()
         print("Connected to DB: %s" % DATABASE)
 
-        query = """SELECT * FROM BookHistory ORDER BY id DESC LIMIT 1;"""
+        query = """SELECT * FROM bookhistory ORDER BY pk_history_id DESC LIMIT 1;"""
         cur.execute(query)
         result = cur.fetchone()  # Single tuple for the Latest row
 
@@ -42,7 +42,7 @@ def view_latest_book_db():
             print("DB connection is closed")
 
 
-def add_new_book_db(new_book_dict):
+def add_new_book_db(new_book_dict, book_title=None):
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
@@ -50,16 +50,16 @@ def add_new_book_db(new_book_dict):
 
         print("ADD THIS BOOK TO DB:", new_book_dict)
 
-        query = """ INSERT INTO BookHistory (Book_title, Author, Genre, Assigned_date, Deadline) VALUES"
+        query = """ INSERT INTO bookhistory (book_title, author, genre, assigned_date, deadline) VALUES"
                   (%s, %s, %s, %s, %s) """
 
-        title = new_book_dict["Book_title"]
-        author = new_book_dict["Author"]
-        genre = new_book_dict["Genre"]
-        assigned_date = new_book_dict["Assigned_date"]
-        deadline = new_book_dict["Deadline"]
+        title = new_book_dict["book_title"]
+        author = new_book_dict["author"]
+        genre = new_book_dict["genre"]
+        assigned_date = new_book_dict["assigned_date"]
+        deadline = new_book_dict["deadline"]
 
-        cur.execute(query, (Book_title, Author, Genre, Assigned_date, Deadline))
+        cur.execute(query, (book_title, author, genre, assigned_date, deadline))
 
         # Commit the transaction to make the changes in the database
         db_connection.commit()

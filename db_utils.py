@@ -23,9 +23,9 @@ def view_latest_book_db():
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
-        print("Connected to DB: %s" % DATABASE)
+        print(f"Connected to DB: {DATABASE}")
 
-        query = """SELECT * FROM bookhistory ORDER BY pk_history_id DESC LIMIT 1;"""
+        query = """SELECT * FROM BookHistory ORDER BY pk_history_id DESC LIMIT 1;"""
         cur.execute(query)
         result = cur.fetchone()  # Single tuple for the Latest row
 

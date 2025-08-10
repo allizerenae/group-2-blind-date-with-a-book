@@ -8,12 +8,11 @@ User Interface Classes
 # user interface class - interaction with user
 
 class UIClass:
-    #class variable of user_subject accessible to all methods
-    user_subject = ""
 
     # attributes
-    def __init__(self, user):
+    def __init__(self, user, user_subject):
         self.user = user
+        self.user_subject = ""
 
     # methods
     def welcome(self):
@@ -40,13 +39,13 @@ class UIClass:
 
     def user_genre_choice(self, user_genre_choice):
         if user_genre_choice == "A":
-            UIClass.user_subject = "Horror"
+            self.user_subject = "Horror"
         if user_genre_choice == "B":
-            UIClass.user_subject = "Comedy"
+            self.user_subject = "Comedy"
         if user_genre_choice == "C":
-            UIClass.user_subject = "Romance"
+            self.user_subject = "Romance"
         if user_genre_choice == "D":
-            UIClass.user_subject = "Random"
+            self.user_subject = "Random"
 
 
     #Option A.  Function to get new book
@@ -54,7 +53,7 @@ class UIClass:
     #Do we need this??!!!
     def get_new_book(self):
         print ("Generating new book")
-        get_random_book_by_genre(UIClass.user_subject)
+        return get_random_book_by_genre(self.user_subject)
 
 
 # user interface class - interaction with database
@@ -97,6 +96,7 @@ class UIDatabaseClass:
 
 
 if __name__ == '__main__':
+    #This is just for testing.  Actual code will be in main.py
     username = input("Hello! Please tell me your name: ").strip().capitalize() #format to clear any white space and give cap letter
     if username == "":
         username = "Reader" #Optional - just call them 'reader' if they don't give a name

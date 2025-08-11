@@ -1,12 +1,21 @@
 import requests
 import random
+import itertools
+
+GENRES = ['horror', 'comedy', 'romance']
+
+
+def get_random_genre():
+    """Function to get a random genre using itertools.islice"""
+    shuffled = random.sample(GENRES, len(GENRES))
+    return next(itertools.islice(shuffled, 1))
 
 
 def get_random_book_by_genre(subject):
     """Function to get a random book based on a user chosen genre"""
 
     # Gets total number of books in chosen genre
-    subject = subject.strip().lower().replace(" ", "_")
+    subject = subject.strip().lower()
     url = f"https://openlibrary.org/subjects/{subject}.json?languages=eng"
     response = requests.get(url)
 
@@ -24,16 +33,16 @@ def get_random_book_by_genre(subject):
     # Get a book data
     book_url = f"{url}&limit=1&offset={selection}"
     book_response = requests.get(book_url)
-    book = book_response.json().get('works', [])
+    book_data = book_response.json().get('works', [])
 
-    if not book:
+    if not book_data:
         return {'error': 'No books found'}
 
-    book_data = book[0]
-    title = book_data.get('title')
+    book = book_data[0]
+    title = book.get('title')
     author = None
-    if book_data.get('authors'):
-        author = book_data['authors'][0].get('name')
+    if book.get('authors'):
+        author = book['authors'][0].get('name')
 
     return {
         'title': title,

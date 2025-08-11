@@ -25,7 +25,7 @@ def view_all_books_db():
         cur = db_connection.cursor()
         print(f"Connected to DB: {DATABASE}")
 
-        query = """SELECT * FROM Books"""
+        query = """SELECT * FROM book_tracker"""
         cur.execute(query)
         result = cur.fetchall()  # this is a list with db records where each record is a tuple
 
@@ -49,7 +49,7 @@ def view_latest_book_db():
         cur = db_connection.cursor()
         print(f"Connected to DB: {DATABASE}")
 
-        query = """SELECT * FROM Books ORDER BY book_id DESC LIMIT 1;"""
+        query = """SELECT * FROM book_tracker ORDER BY book_id DESC LIMIT 1;"""
         cur.execute(query)
         result = cur.fetchone()  # Single tuple for the Latest row
 
@@ -74,7 +74,7 @@ def add_new_book_db(new_book_dict):
 
         print("ADD THIS BOOK TO DB:", new_book_dict)
 
-        query = """ INSERT INTO BookHistory (book_title, author, genre, assigned_date, deadline) VALUES
+        query = """ INSERT INTO book_tracker (book_title, author, genre, assigned_date, deadline) VALUES
                   (%s, %s, %s, %s, %s, %s) """
 
         title = new_book_dict["book_title"]

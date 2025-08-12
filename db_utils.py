@@ -75,7 +75,7 @@ def add_new_book_db(new_book_dict):
         print("ADD THIS BOOK TO DB:", new_book_dict)
 
         query = """ INSERT INTO book_tracker (book_title, author, genre, assigned_date, deadline) VALUES
-                  (%s, %s, %s, %s, %s, %s) """
+                  (%s, %s, %s, %s, %s) """
 
         title = new_book_dict["book_title"]
         author = new_book_dict["author"]

@@ -1,4 +1,4 @@
-USER = "<Enter Username here>" #replace content within quotation marks with your own details
-PASSWORD = "<Enter SQL Password here>" #replace content within quotation marks with your own details
+USER = "<Enter Username here>"
+PASSWORD = "<Enter SQL Password here>"
 HOST = "localhost"
 DATABASE = "LibraryDB"

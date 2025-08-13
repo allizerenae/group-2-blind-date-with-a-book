@@ -1,8 +1,10 @@
 from datetime import date, timedelta
 from UI import UIClass
-from flask_api import get_random_book_by_genre
+#from flask_api import get_random_book_by_genre
 from db_utils import add_new_book_db, view_all_books_db
+from book_api import get_random_genre, get_random_book_by_genre
 from book import Book
+
 
 def main():
     username = input("Hello! Please tell me your name: ").strip().capitalize()

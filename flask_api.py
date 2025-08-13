@@ -17,8 +17,8 @@ def add_new_book_api():
     return jsonify(add_new_book_db(new_book))
 
 # Stub for testing API from main.py
-def get_random_book_by_genre(genre):
-    return {"title": "Mock Book Title", "author": "Mock Author"}
+#def get_random_book_by_genre(genre):
+    #return {"title": "Mock Book Title", "author": "Mock Author"}
 
 if __name__ == "__main__":
     app.run(debug=True)

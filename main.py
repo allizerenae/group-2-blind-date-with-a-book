@@ -1,7 +1,7 @@
 from datetime import date, timedelta
-from UI import UIClass
-from flask_api import get_random_book_by_genre
+from UI import UIClass, UIDatabaseClass
 from db_utils import add_new_book_db, view_all_books_db
+from book_api import get_random_book_by_genre
 from book import Book
 
 def main():
@@ -9,23 +9,24 @@ def main():
     if username == "":
         username = "Reader"
 
-    UI = UIClass(username)
+    ui = UIClass(username)
+    ui_db = UIDatabaseClass
 
-    print(UI.welcome())
-    UI.display_genres()
+    print(ui.welcome())
+    ui.display_genres()
 
     choice = input("Enter your choice (A-D): ").strip().upper()
 
     # Map choice to genre
     mapping = {"A": "Horror", "B": "Comedy", "C": "Romance", "D": "Random"}
-    UI.user_subject = mapping.get(choice, "Random")
+    ui.user_subject = mapping.get(choice, "Random")
 
     print("Fetching a book from the Open Library API...")
     book_data = get_random_book_by_genre(UI.user_subject)
 
     title = book_data.get("title", "Unknown Title")
     author = book_data.get("author", "Unknown Author")
-    genre = UI.user_subject
+    genre = ui.user_subject
 
     assigned_date = date.today()
     deadline = assigned_date + timedelta(days=7)

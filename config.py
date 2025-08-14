@@ -1,4 +1,4 @@
-USER = "<Enter Username here>"
-PASSWORD = "<Enter SQL Password here>"
+USER = "<Enter username here>"
+PASSWORD = "<Enter password here>"
 HOST = "localhost"
 DATABASE = "LibraryDB"

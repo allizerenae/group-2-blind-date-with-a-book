@@ -67,7 +67,7 @@ class UIDatabaseClass:
 
     #Function to get new book data from book_api...
     #....and pass to db_utils.
-    #data from book_api needs to turn into a dictoinary for use by db_utils
+    #data from book_api needs to turn into a dictionary for use by db_utils
     def create_new_book_dictionary_UI(self, title, author, subject):
        new_book = {
             'title': title,
@@ -96,6 +96,7 @@ class UIDatabaseClass:
 
 
 if __name__ == '__main__':
+    #print("TESTING")
     #This is just for testing.  Actual code will be in main.py
     username = input("Hello! Please tell me your name: ").strip().capitalize() #format to clear any white space and give cap letter
     if username == "":

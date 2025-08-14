@@ -22,7 +22,7 @@ def main():
     ui.user_subject = mapping.get(choice, "Random")
 
     print("Fetching a book from the Open Library API...")
-    book_data = get_random_book_by_genre(UI.user_subject)
+    book_data = get_random_book_by_genre(ui.user_subject)
 
     title = book_data.get("title", "Unknown Title")
     author = book_data.get("author", "Unknown Author")

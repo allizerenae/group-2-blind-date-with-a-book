@@ -59,8 +59,9 @@ def get_random_book_by_genre(subject):
     }
 
 if __name__ == '__main__':
+    print("TESTING BOOK_API")
     # This is for testing purposes
-    genre = input("Which genre would you like? ")
-    print(get_random_book_by_genre(genre))
+    #genre = input("Which genre would you like? ")
+    #print(get_random_book_by_genre(genre))
 
 

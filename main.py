@@ -3,7 +3,6 @@ from UI import UIClass, UIDatabaseClass
 from db_utils import add_new_book_db
 from book_api import get_random_book_by_genre
 from book import Book
-from decorators import log_function_call
 
 def get_valid_choice(prompt, valid_options):
     choice = ""
@@ -44,7 +43,6 @@ def view_books(ui_db, option):
     else:
         print(data)
 
-@log_function_call
 def main():
     username = input("Hello! Please tell me your name: ").strip().capitalize() or "Reader"
     ui = UIClass(username, "")

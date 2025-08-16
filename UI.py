@@ -1,15 +1,40 @@
 import requests
 import json
 
+# user interface database class - interaction with database
+class UIDatabaseClass:
+
+    #UI Database Class Attributes
+    def __init__(self, base_url = "http://127.0.0.1:5000"):
+        self.base_url = base_url
+
+#option A.  Get new book and save to database
+    def add_new_book_to_database_UI(self, book_data):
+        endpoint1  = f"{self.base_url}/books/add"
+        response = requests.post(endpoint1, headers={'content-type':'application/json'},data=json.dumps(book_data))
+        return response.json()
+
+#option B.  Function to view current book and deadline
+    def view_current_book_UI(self):
+        endpoint2 = f"{self.base_url}/books/current"
+        current_book_data = requests.get(endpoint2)
+        return current_book_data.json()
+
+#Option C. Function to view all books in the database (incl. current book)
+    def view_all_books_UI(self):
+        endpoint3 = f"{self.base_url}/books"
+        view_all_books_data = requests.get(endpoint3)
+        return view_all_books_data.json()
+
 
 # user interface class - interaction with user
-
 class UIClass:
 
     # attributes
     def __init__(self, user, user_subject):
         self.user = user
         self.user_subject = ""
+        self.database = UIDatabaseClass() #UIClass owns UIDatabaseClass instance
 
     # methods
     def welcome(self):
@@ -34,38 +59,11 @@ class UIClass:
         print ("C: Romance")
         print ("D: Random genre")
 
-# user interface class - interaction with database
-
-class UIDatabaseClass:
-
-    #UI Database Class Attributes
-    def __init__(self, base_url = "http://127.0.0.1:5000"):
-        self.base_url = base_url
-
-    def add_new_book_to_database_UI(self, new_book_dictionary):
-        endpoint1  = f"{self.base_url}/books/add"
-        new_book = requests.post(endpoint1, headers={'content-type':'application/json'},data=json.dumps(new_book_dictionary))
-        return new_book
-
-#option B.  Function to view current book and deadline
-    def view_current_book_UI(self):
-        endpoint2 = f"{self.base_url}/books/current"
-        current_book_data = requests.get(endpoint2)
-        return current_book_data.json()
-
-#Option C. Function to view all books in the database (incl. current book)
-    def view_all_books_UI(self):
-        endpoint3 = f"{self.base_url}/books"
-        view_all_books_data = requests.get(endpoint3)
-        return view_all_books_data.json()
-
+    def add_new_book_to_database_UI(self, book_data):
+        #Delegate the call to the database class
+        return self.database.add_new_book_to_database_UI(book_data)
 
 if __name__ == '__main__':
     print("TESTING")
 
-    # username = input("Hello! Please tell me your name: ").strip().capitalize() #format to clear any white space and give cap letter
-    # if username == "":
-    #     username = "Reader" #Optional - just call them 'reader' if they don't give a name
-    # main_user = UIClass(username)
-    # print(UIClass.welcome(main_user))
-    # UIClass.display_options(main_user)
+

@@ -12,8 +12,8 @@ class Book:
             "book_title": self.title,
             "author": self.author,
             "genre": self.genre,
-            "assigned_date": self.assigned_date,
-            "deadline": self.deadline
+            "assigned_date": self.assigned_date.isoformat(), #convert date to string
+            "deadline": self.deadline.isoformat(), #convert date to string
         }
 
     def __str__(self):

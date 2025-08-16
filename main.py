@@ -28,7 +28,7 @@ def fetch_and_save_book(ui):
         date.today() + timedelta(days=7)
     )
     print("\nHere’s your blind date book:\n", book)
-    add_new_book_db(book.to_dict())
+    ui.add_new_book_to_database_UI (book.to_dict())
     print("Book saved to your reading list.")
 
 def view_books(ui_db, option):

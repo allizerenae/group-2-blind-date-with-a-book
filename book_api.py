@@ -16,37 +16,52 @@ def get_random_book_by_genre(subject):
 
     # Gets total number of books in chosen genre
     subject = subject.strip().lower()
-    url = f"https://openlibrary.org/subjects/{subject}.json?languages=eng"
-    response = requests.get(url)
+    if subject == "random":
+        subject = get_random_genre()
 
-    if response.status_code != 200:
-        return {'error': 'Genre not found or API error'}
+    url = f"https://openlibrary.org/subjects/{subject}.json?languages=eng"
+
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+    except requests.RequestException:
+        return {'error': 'Network or API error'}
 
     total_books = response.json().get('work_count', 0)
     if total_books == 0:
         return {'error': 'No books found in this genre'}
 
     # Choose a random selection
-    max_selection = max(0, total_books - 1)
-    selection = random.randint(0, max_selection)
-
-    # Get a book data
+    selection = random.randint(0, max(0, total_books - 1))
+    # Get book data
     book_url = f"{url}&limit=1&offset={selection}"
-    book_response = requests.get(book_url)
-    book_data = book_response.json().get('works', [])
 
+    try:
+        book_response = requests.get(book_url, timeout=10)
+        book_response.raise_for_status()
+    except requests.RequestException:
+        return {'error': 'Network or API error'}
+
+    book_data = book_response.json().get('works', [])
     if not book_data:
         return {'error': 'No books found'}
 
     book = book_data[0]
-    title = book.get('title')
-    author = None
+    title = book.get('title', 'Unknown Title')
+    author = "Unknown Author"
     if book.get('authors'):
-        author = book['authors'][0].get('name')
+        author = book['authors'][0].get('name', "Unknown Author")
 
     return {
         'title': title,
         'author': author,
         'genre': subject,
     }
+
+if __name__ == '__main__':
+    print("TESTING BOOK_API")
+    # This is for testing purposes
+    #genre = input("Which genre would you like? ")
+    #print(get_random_book_by_genre(genre))
+
 

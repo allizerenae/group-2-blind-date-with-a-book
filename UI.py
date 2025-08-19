@@ -59,9 +59,9 @@ class UIClass:
         print ("C: Romance")
         print ("D: Random genre")
 
-    def add_new_book_to_database_UI(self, book_data):
+    #def add_new_book_to_database_UI(self, book_data):
         #Delegate the call to the database class
-        return self.database.add_new_book_to_database_UI(book_data)
+        #return self.database.add_new_book_to_database_UI(book_data)
 
 if __name__ == '__main__':
     print("TESTING")

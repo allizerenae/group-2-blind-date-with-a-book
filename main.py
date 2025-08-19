@@ -22,7 +22,7 @@ def fetch_and_save_book(ui, ui_db):
     book = Book(
         data.get("title", "Unknown Title"),
         data.get("author", "Unknown Author"),
-        ui.user_subject,
+        data.get("genre", ui.user_subject),
         date.today(),
         date.today() + timedelta(days=7)
     )

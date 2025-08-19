@@ -1,4 +1,4 @@
-USER = "root"
-PASSWORD = "Cho0sesql!"
+USER = "<enter username here >"
+PASSWORD = "<enter password here>"
 HOST = "localhost"
 DATABASE = "LibraryDB"

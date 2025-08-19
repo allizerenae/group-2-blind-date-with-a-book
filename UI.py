@@ -64,6 +64,9 @@ class UIClass:
         #return self.database.add_new_book_to_database_UI(book_data)
 
 if __name__ == '__main__':
-    print("TESTING")
+    try:
+        print("TESTING")
+    except Exception as e:
+        print("Unsuccessful:", e)
 
 

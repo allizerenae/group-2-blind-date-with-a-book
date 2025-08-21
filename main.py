@@ -2,6 +2,8 @@ from datetime import date, timedelta
 from UI import UIClass, UIDatabaseClass
 from book_api import get_random_book_by_genre
 from book import Book
+from deadline import get_assigned_date, get_deadline
+
 
 def get_valid_choice(prompt, valid_options):
     choice = ""
@@ -22,9 +24,9 @@ def fetch_and_save_book(ui, ui_db):
     book = Book(
         data.get("title", "Unknown Title"),
         data.get("author", "Unknown Author"),
-        data.get("genre", ui.user_subject),
-        date.today(),
-        date.today() + timedelta(days=7)
+        ui.user_subject,
+        get_assigned_date(),
+        get_deadline()
     )
     print("\nHere’s your blind date book:\n", book)
     ui_db.add_new_book_to_database_UI (book.to_dict())

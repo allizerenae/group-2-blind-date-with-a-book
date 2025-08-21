@@ -19,6 +19,8 @@ def _connect_to_db():
     )
     return cnx
 
+
+
 def view_all_books_db():
     db_connection = None
     try:
@@ -100,5 +102,10 @@ def add_new_book_db(new_book_dict):
             print("DB connection is closed")
 
 if __name__ == "__main__":
-    print("TESTING DB CONNECTION")
+    try:
+        cnx = _connect_to_db()
+        print("Connected successfully")
+        cnx.close()
+    except Exception as e:
+        print("Connection failed:", e)
 

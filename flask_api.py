@@ -13,8 +13,8 @@ def view_latest_book_api():
 
 @app.route("/books/add", methods=["POST"])
 def add_new_book_api():
-    new_book = request.get_json()
-    return jsonify(add_new_book_db(new_book))
+    new_book_dict = request.get_json()
+    return jsonify(add_new_book_db(new_book_dict))
 
 # Stub for testing API from main.py
 #def get_random_book_by_genre(genre):

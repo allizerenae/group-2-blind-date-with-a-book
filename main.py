@@ -1,4 +1,3 @@
-from datetime import date, timedelta
 from UI import UIClass, UIDatabaseClass
 from book_api import get_random_book_by_genre
 from book import Book
@@ -24,7 +23,7 @@ def fetch_and_save_book(ui, ui_db):
     book = Book(
         data.get("title", "Unknown Title"),
         data.get("author", "Unknown Author"),
-        ui.user_subject,
+        data.get("genre", ui.user_subject),
         get_assigned_date(),
         get_deadline()
     )

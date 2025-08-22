@@ -95,20 +95,25 @@ Now interact with the terminal-based user interface.
 ## Project Structure  
 ```
 group-2-blind-date-with-a-book/
-├─ venv/                  # Python virtual environment
+├─ venv/                     # Python virtual environment
 ├─ .gitignore
-├─ book.py                # Book logic
-├─ book_api.py            # API helper functions
-├─ config.py              # Database configuration
-├─ database_setup.sql     # SQL script to create DB and tables
-├─ db_utils.py            # Database helper functions
-├─ deadline.py            # Deadline management
-├─ flask_api.py           # Flask API server
-├─ main.py                # Terminal UI entrypoint
-├─ UI.py                  # Terminal UI logic
-├─ requirements.txt       # Python dependencies
-├─ test.py                # Unit tests
-└─ README.md              # Documentation
+├─ README.md                 # Project documentation
+├─ requirements.txt          # Python dependencies
+├─ database/
+│   ├─ database_setup.sql    # SQL script to create DB and tables
+│   └─ config.py             # Database configuration
+├─ app/                      # Source code for the project
+│   ├─ __init__.py
+│   ├─ book.py               # Book logic
+│   ├─ book_api.py           # API helper functions
+│   ├─ db_utils.py           # Database helper functions
+│   ├─ deadline.py           # Deadline management
+│   ├─ flask_api.py          # Flask API server
+│   └─ ui.py                 # Terminal UI logic (renamed to lowercase)
+├─ tests/                    # Unit tests
+│   ├─ __init__.py
+│   └─ test.py               # Tests for main functions
+└─ main.py                   # Terminal UI entrypoint
 ```
 
 ---

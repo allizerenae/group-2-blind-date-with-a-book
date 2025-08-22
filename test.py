@@ -1,7 +1,11 @@
 import unittest
-from unittest.mock import patch
-from main import get_valid_choice
+from unittest.mock import patch, MagicMock, ANY
+from main import get_valid_choice, view_books, fetch_and_save_book
+from datetime import date
 
+# -----------------------------
+# Tests for get_valid_choice
+# -----------------------------
 class TestGetValidChoice(unittest.TestCase):
 
     # class attributes for each test
@@ -30,8 +34,111 @@ class TestGetValidChoice(unittest.TestCase):
     # tests handling of spacing within input
     @patch("main.input", return_value=" a ")
     def test_spacing(self, mock_user_input):
-            actual = get_valid_choice(self.prompt, self.valid_options)
-            self.assertEqual("A", actual)
+        actual = get_valid_choice(self.prompt, self.valid_options)
+        self.assertEqual("A", actual)
+
+    # tests handling of empty input
+    @patch("main.input", side_effect=["", "D"])
+    def test_empty_then_valid(self, mock_user_input):
+        actual = get_valid_choice(self.prompt, self.valid_options)
+        self.assertEqual("D", actual)
+
+    # tests handling of invalid symbol characters
+    @patch("main.input", side_effect=["!", "B"])
+    def test_symbol_then_valid(self, mock_user_input):
+        actual = get_valid_choice(self.prompt, self.valid_options)
+        self.assertEqual("B", actual)
+
+
+# -----------------------------
+# Tests for view_books
+# -----------------------------
+class TestViewBooks(unittest.TestCase):
+
+    # tests handling of view current book
+    @patch("builtins.print")
+    def test_view_current_book(self, mock_print):
+        ui_db = MagicMock()
+        ui_db.view_current_book_UI = MagicMock(return_value="Current Book: Dracula")
+
+        view_books(ui_db, "B")
+
+        ui_db.view_current_book_UI.assert_called_once()
+        mock_print.assert_any_call("\nBooks:\n")
+        mock_print.assert_any_call("Current Book: Dracula")
+
+    # tests handling of view all books when as a list
+    @patch("builtins.print")
+    def test_view_all_books_list(self, mock_print):
+        ui_db = MagicMock()
+        ui_db.view_all_books_UI = MagicMock(return_value=["Book 1", "Book 2"])
+
+        view_books(ui_db, "C")
+
+        ui_db.view_all_books_UI.assert_called_once()
+        mock_print.assert_any_call("\nBooks:\n")
+        mock_print.assert_any_call("Book 1")
+        mock_print.assert_any_call("Book 2")
+
+    # tests handling of view all books when empty
+    @patch("builtins.print")
+    def test_view_all_books_single(self, mock_print):
+        ui_db = MagicMock()
+        ui_db.view_all_books_UI = MagicMock(return_value="No books found.")
+
+        view_books(ui_db, "C")
+
+        ui_db.view_all_books_UI.assert_called_once()
+        mock_print.assert_any_call("\nBooks:\n")
+        mock_print.assert_any_call("No books found.")
+
+
+# -----------------------------
+# Tests for fetch_and_save_book
+# -----------------------------
+
+# Applying common patches for all tests in the class
+@patch("main.get_valid_choice", return_value="B")
+@patch("main.get_random_book_by_genre", return_value={
+    "title": "Funny Book",
+    "author": "Jane Doe",
+    "genre": "Comedy"
+})
+@patch("main.get_assigned_date", return_value=date(2025, 8, 19))
+@patch("main.get_deadline", return_value=date(2025, 8, 26))
+class TestFetchAndSaveBook(unittest.TestCase):
+
+    def setUp(self):
+        self.ui = MagicMock()
+        self.ui.user_subject = ""
+
+    # tests genre selection and book creation
+    def test_genre_and_book_saved(self, mock_deadline, mock_assigned, mock_api, mock_choice):
+        fetch_and_save_book(self.ui)
+
+        # display genres should be called
+        self.ui.display_genres.assert_called_once()
+
+        # genre mapping should be correct
+        self.assertEqual(self.ui.user_subject, "Comedy")
+
+        # check book saved to database with correct fields
+        self.ui.add_new_book_to_database_UI.assert_called_once_with({
+            "book_title": "Funny Book",
+            "author": "Jane Doe",
+            "genre": "Comedy",
+            "assigned_date": "2025-08-19",
+            "deadline": "2025-08-26"
+        })
+
+    # tests printed messages
+    @patch("builtins.print")
+    def test_printed_output(self, mock_print, mock_deadline, mock_assigned, mock_api, mock_choice):
+        fetch_and_save_book(self.ui)
+        mock_print.assert_any_call("Fetching a book from the Open Library API...")
+        mock_print.assert_any_call("\nHere’s your blind date book:\n", ANY)
+        mock_print.assert_any_call("Book saved to your reading list.")
+
 
 if __name__ == "__main__":
     unittest.main()

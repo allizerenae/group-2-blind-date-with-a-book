@@ -1,6 +1,4 @@
-from datetime import date, timedelta
 from UI import UIClass, UIDatabaseClass
-from db_utils import add_new_book_db
 from book_api import get_random_book_by_genre
 from book import Book
 from deadline import get_assigned_date, get_deadline
@@ -14,7 +12,7 @@ def get_valid_choice(prompt, valid_options):
             print(f"Invalid choice. Please enter one of: {', '.join(valid_options)}.")
     return choice
 
-def fetch_and_save_book(ui):
+def fetch_and_save_book(ui, ui_db):
     ui.display_genres()
     genre_choice = get_valid_choice("Enter your genre choice (A-D): ", ["A", "B", "C", "D"])
     mapping = {"A": "Horror", "B": "Comedy", "C": "Romance", "D": "Random"}
@@ -25,12 +23,12 @@ def fetch_and_save_book(ui):
     book = Book(
         data.get("title", "Unknown Title"),
         data.get("author", "Unknown Author"),
-        ui.user_subject,
+        data.get("genre", ui.user_subject),
         get_assigned_date(),
         get_deadline()
     )
     print("\nHere’s your blind date book:\n", book)
-    ui.add_new_book_to_database_UI (book.to_dict())
+    ui_db.add_new_book_to_database_UI (book.to_dict())
     print("Book saved to your reading list.")
 
 def view_books(ui_db, option):
@@ -53,7 +51,7 @@ def main():
     print(ui.welcome())
 
     actions = {
-        "A": lambda: fetch_and_save_book(ui),
+        "A": lambda: fetch_and_save_book(ui, ui_db),
         "B": lambda: view_books(ui_db, "B"),
         "C": lambda: view_books(ui_db, "C")
     }

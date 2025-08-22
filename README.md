@@ -1,236 +1,148 @@
-Blind Date with a Book 📚
+# Blind Date with a Book 📚✨  
+
+## Overview  
+Blind Date with a Book is a fun web application where users can discover a new book without knowing its title or cover beforehand. 
+Inspired by the “blind date” concept, it encourages readers to explore outside their usual genres and find hidden gems.  
+
+This app was primarily designed to be used by book club leaders to generate a new book and set deadlines. However, it could also be
+used by avid readers that are seeking some inspiration for their next read.
+
+This project was developed as part of the Code First Girls course, showcasing our learning in Python, MySQL, and Flask while collaborating as a team.  
+
+---
+
+## Features  
+- 🎲 **Random Book Generator** – get a surprise book suggestion at the click of a button.  
+- 📖 **Genre Selection** – choose a genre and let the app recommend a book.  
+- 💾 **Database Storage** – all books are stored in a MySQL database for easy retrieval.  
+- 🌐 **Flask API** – provides endpoints to fetch books by genre or at random.  
+- 🖥️ **User-friendly Interface** – simple design for quick discovery.  
+
+---
+
+## Tech Stack  
+- **Backend:** Python (Flask)  
+- **Database:** MySQL  
+- **Frontend:** Terminal UI  
+- **Other:** Git/GitHub for version control  
+
+---
+
+## Installation & Setup  
+
+### 1. **Clone the repo**  
+```bash
+git clone https://github.com/your-repo/blind-date-with-a-book.git
+cd blind-date-with-a-book
+```
+### 2. **Set up a virtual environment**  
+```bash
+python -m venv venv
+# Mac/Linux
+source venv/bin/activate
+# Windows
+venv\Scripts\activate
+```
+
+### 3) Install dependencies
+Requirements include: Requests, Flask and MySQLConnector.
+```bash
+pip install -r requirements.txt
+```
+
+### 4) Update Config file
+Update `config.py` with your database credentials:
+```ini
+USER = "YOUR USERNAME"
+PASSWORD = "YOUR PASSWORD"
+HOST = "localhost"
+DATABASE = "LibraryDB"
+```
+
+### 5) Set up the database
+- Open your MySQL terminal and run the provided SQL script (`database_setup.sql`) to create the required
+database ('LibraryDB') and tables.
+
+
+### 6) Run the app
+```bash
+# Start the Flask API
+python flask_api.py
+
+# Start the main app
+python main.py
+```
+Now interact with the terminal-based user interface.  
+
+---
+
+## API Endpoints
+- `GET /books` → returns all books in the database  
+- `GET /books/current` → returns the most recent book in the database  
+- `GET /books/add` → adds a new book to the database
+
+**Example response**
+```json
+{
+  "title": "Example Book",
+  "author": "Jane Doe",
+  "genre": "Romance"
+}
+```
+
+---
+
+## Project Structure  
+```
+group-2-blind-date-with-a-book/
+├─ venv/                  # Python virtual environment
+├─ .gitignore
+├─ book.py                # Book logic
+├─ book_api.py            # API helper functions
+├─ config.py              # Database configuration
+├─ database_setup.sql     # SQL script to create DB and tables
+├─ db_utils.py            # Database helper functions
+├─ deadline.py            # Deadline management
+├─ flask_api.py           # Flask API server
+├─ main.py                # Terminal UI entrypoint
+├─ UI.py                  # Terminal UI logic
+├─ requirements.txt       # Python dependencies
+├─ test.py                # Unit tests
+└─ README.md              # Documentation
+```
+
+---
+
+## Testing
+Unit tests are included in `test.py`. To run the tests:  
+```bash
+python test.py
+```
+Ensure the virtual environment is active and dependencies are installed. These tests cover core functionalities like book retrieval, API responses, and database interactions.  
+
+---
+
+## Roadmap / Future Improvements
+- Wider genre and book choices
+- User registration and personalised recommendations
+- Genre voting
+- Options to choose and adjust deadlines
+- Ratings, reviews and favourites
+- Deadline reminders
+- Responsive UI improvements
+- Further amendments to reduce errors (e.g. books in different languages)
+
+---
+
+## Contributors
+Developed by **Group 2 – Code First Girls CFGdegree**  
+- Rachel Fuller
+- Debbie Richford
+- Allize Renae
+- Maisie Pepper
+- Kav Ravikumar
+- Nemi Imoh
+- Janine O'Connor
+
+---
 
-Group Two CFG Project
-Marker: Asma
-
-Team Members
-
-Debbie Richford
-
-Allize Renae
-
-Rachel Fuller
-
-Janine O’Connor
-
-Maisie Pepper
-
-Kav Ravikumar
-
-Nemi Imoh
-
-#Introduction
-
-Project Objective
-The goal of Blind Date with a Book is to build a command line interface tool that helps a book club admin select the club’s next read. The app integrates with the Open Library API, stores reading history in an SQL database, and automatically sets reading deadlines.
-
-Project Solution
-This app streamlines decision-making for book clubs, keeping monthly selections fun, fair, and organized, while saving admins valuable time.
-
-#Background
-App Workflow
-
-User is welcomed with a message.
-
-Main menu presents three options:
-
-Choose New Book
-
-Select from genres: Horror, Comedy, Romance, Random
-
-Fetch book details from Open Library API
-
-Save book with assigned date + deadline in SQL database
-
-View Current Book and Deadline
-
-Displays current book details + reading deadline
-
-View Book History
-
-Shows previous selections with deadlines and genres
-
-# API used: Open Library API
-
-  Specifications and Design
-  Required Features
-
-SQL Database
-
-Open Library API
-
-Reading Deadline (auto-generated)
-
-User Input & Validation
-
-Random Book Suggestions
-
-Flask API
-
-Book Tracker
-
-# Tools and Technologies
-
-Python (with OOP)
-
-SQL / MySQLConnector
-
-Flask
-
-Open Library API
-
-GitHub (collaboration & version control)
-
-Pytest (unit testing)
-
-Itertools & Collections (logic helpers)
-
-Error Handling
-
-# Possible Issues
-
-Duplicate book selections → Need to avoid books already in the database.
-
-# V2 Features (Future Enhancements)
-
-Genre voting
-
-Custom reading deadlines (1 week, 2 weeks, 1 month)
-
-Reminder notifications
-
-Member registration & user accounts
-
-Reviews & ratings
-
-Audiobook option
-
-# Architecture
-
-CLI App: Main program where users interact.
-
-Database Layer: Stores books, history, deadlines, reviews.
-
-API Layer (Flask): Custom endpoints to serve and manage data.
-
-External API: Open Library API for book suggestions.
-
-(Architecture diagram can be inserted here if available.)
-
-# Implementation
-# Workload Distribution
-
-Allize – main.py, book.py (Book class), GitHub coordination, project manager, README, documentation
-
-Debbie – ui.py (UI class), documentation
-
-Rachel – ui.py, documentation, unit test setup
-
-Maisie – book_api.py (Open Library API integration), Flask + SQL endpoints
-
-Kav – SQL schema
-
-Nemi – DB utilities
-
-Janine – deadline.py (deadline logic with datetime)
-
-Full Team Contributions:
-
-requirements.txt
-
-Manual testing, unit testing, UAT, regression testing
-
-Code reviews
-
-Presentation slides
-
-# Tools and Libraries Used
-
-Random – Select random book
-
-Datetime – Manage deadlines
-
-Flask – Build custom API
-
-MySQLConnector – Connect app to SQL database
-
-Requests – API calls
-
-Itertools – Logic helpers (e.g., cycling options)
-
-# Testing and Evaluation
-
-Testing approach:
-
-Manual testing of features
-
-Unit testing with Pytest
-
-UAT (User Acceptance Testing)
-
-Regression testing
-
-Elements Tested:
-
-Database connection
-
-Open Library API calls
-
-Random book selection
-
-Adding books to DB
-
-Viewing current book & deadline
-
-Viewing history
-
-OOP class object creation
-
-User flow & input validation
-
-# Implementation Process
-Achievements
-
-All members contributed and voted on the final idea
-
-Regular team meetings to track progress
-
-Agile methodology with pair programming in some parts
-
-Challenges
-
-Dividing tasks effectively
-
-Scheduling meetings across availability
-
-Key Decisions
-
-Streamlined initial scope for a working MVP
-
-Deferred advanced features into Future Enhancements
-
-# Conclusion
-
-Blind Date with a Book successfully demonstrates how a CLI app can combine API integration, SQL storage, and OOP design to support book club management.
-
-Future Improvements
-
-User-driven genre choices
-
-Flexible deadline options
-
-Member registration and user accounts
-
-Book reviews and ratings
-
-Reminder notifications for deadlines
-
-Audiobook support
-
-# Installation & Setup
-1. Clone Repo
-2. Set up virtual environment
-3. Install dependencies
-4. Configure MySQL database
-5. Run the app
-6. Run tests

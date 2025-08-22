@@ -1,4 +1,4 @@
-USER = "root"
-PASSWORD = "Meadvale18*"
+USER = "<enter your username here>"
+PASSWORD = "<enter your password here>"
 HOST = "localhost"
 DATABASE = "LibraryDB"

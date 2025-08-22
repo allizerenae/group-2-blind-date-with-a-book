@@ -16,38 +16,44 @@ class TestGetValidChoice(unittest.TestCase):
         self.valid_options = ["A", "B", "C", "D"]
 
     # tests a valid input
+    @patch("builtins.print")
     @patch("main.input", return_value="B")
-    def test_valid_input(self, mock_user_input):
+    def test_valid_input(self, mock_user_input, mock_print):
         actual = get_valid_choice(self.prompt, self.valid_options)
         self.assertEqual("B", actual)
 
     # tests handling of an invalid input followed by a valid one.
+    @patch("builtins.print")
     @patch("main.input", side_effect=["x", "C"])
-    def test_invalid_then_valid(self, mock_user_input):
+    def test_invalid_then_valid(self, mock_user_input, mock_print):
         actual = get_valid_choice(self.prompt, self.valid_options)
         self.assertEqual("C", actual)
 
     # tests handling of lowercase input
+    @patch("builtins.print")
     @patch("main.input", return_value="a")
-    def test_lowercase(self, mock_user_input):
+    def test_lowercase(self, mock_user_input, mock_print):
         actual = get_valid_choice(self.prompt, self.valid_options)
         self.assertEqual("A", actual)
 
     # tests handling of spacing within input
     @patch("main.input", return_value=" a ")
-    def test_spacing(self, mock_user_input):
+    @patch("builtins.print")
+    def test_spacing(self, mock_user_input, mock_print):
         actual = get_valid_choice(self.prompt, self.valid_options)
         self.assertEqual("A", actual)
 
     # tests handling of empty input
+    @patch("builtins.print")
     @patch("main.input", side_effect=["", "D"])
-    def test_empty_then_valid(self, mock_user_input):
+    def test_empty_then_valid(self, mock_user_input, mock_print):
         actual = get_valid_choice(self.prompt, self.valid_options)
         self.assertEqual("D", actual)
 
     # tests handling of invalid symbol characters
+    @patch("builtins.print")
     @patch("main.input", side_effect=["!", "B"])
-    def test_symbol_then_valid(self, mock_user_input):
+    def test_symbol_then_valid(self, mock_user_input, mock_print):
         actual = get_valid_choice(self.prompt, self.valid_options)
         self.assertEqual("B", actual)
 
@@ -116,7 +122,8 @@ class TestFetchAndSaveBook(unittest.TestCase):
         self.ui_db = MagicMock()
 
     # tests genre selection and book creation
-    def test_genre_and_book_saved(self, mock_deadline, mock_assigned, mock_api, mock_choice):
+    @patch("builtins.print")
+    def test_genre_and_book_saved(self, mock_print, mock_deadline, mock_assigned, mock_api, mock_choice):
         fetch_and_save_book(self.ui, self.ui_db)
 
         # display genres should be called

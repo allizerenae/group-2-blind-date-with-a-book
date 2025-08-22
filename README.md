@@ -51,7 +51,7 @@ pip install -r requirements.txt
 ```
 
 ### 4) Update Config file
-Update `config.py` with your database credentials:
+Update `database/config.py` with your database credentials:
 ```ini
 USER = "YOUR USERNAME"
 PASSWORD = "YOUR PASSWORD"
@@ -60,14 +60,14 @@ DATABASE = "LibraryDB"
 ```
 
 ### 5) Set up the database
-- Open your MySQL terminal and run the provided SQL script (`database_setup.sql`) to create the required
+- Open your MySQL terminal and run the provided SQL script (`database/database_setup.sql`) to create the required
 database ('LibraryDB') and tables.
 
 
 ### 6) Run the app
 ```bash
 # Start the Flask API
-python flask_api.py
+python app/flask_api.py
 
 # Start the main app
 python main.py
@@ -119,9 +119,9 @@ group-2-blind-date-with-a-book/
 ---
 
 ## Testing
-Unit tests are included in `test.py`. To run the tests:  
+Unit tests are included in `tests/test.py`. To run the tests:  
 ```bash
-python test.py
+python tests/test.py
 ```
 Ensure the virtual environment is active and dependencies are installed. These tests cover core functionalities like book retrieval, API responses, and database interactions.  
 

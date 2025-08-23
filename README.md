@@ -79,7 +79,7 @@ Now interact with the terminal-based user interface.
 ## API Endpoints
 - `GET /books` → returns all books in the database  
 - `GET /books/current` → returns the most recent book in the database  
-- `GET /books/add` → adds a new book to the database
+- `POST /books/add` → adds a new book to the database
 
 **Example response**
 ```json
@@ -95,13 +95,6 @@ Now interact with the terminal-based user interface.
 ## Project Structure  
 ```
 group-2-blind-date-with-a-book/
-├─ venv/                     # Python virtual environment
-├─ .gitignore
-├─ README.md                 # Project documentation
-├─ requirements.txt          # Python dependencies
-├─ database/
-│   ├─ database_setup.sql    # SQL script to create DB and tables
-│   └─ config.py             # Database configuration
 ├─ app/                      # Source code for the project
 │   ├─ __init__.py
 │   ├─ book.py               # Book logic
@@ -109,19 +102,41 @@ group-2-blind-date-with-a-book/
 │   ├─ db_utils.py           # Database helper functions
 │   ├─ deadline.py           # Deadline management
 │   ├─ flask_api.py          # Flask API server
-│   └─ ui.py                 # Terminal UI logic (renamed to lowercase)
+│   └─ ui.py                 # Terminal UI logic
+├─ database/
+│   ├─ database_setup.sql    # SQL script to create DB and tables
+│   └─ config.py             # Database configuration
 ├─ tests/                    # Unit tests
 │   ├─ __init__.py
-│   └─ test.py               # Tests for main functions
-└─ main.py                   # Terminal UI entrypoint
+│   ├─ test_book_api.py      # Tests for API functions
+│   └─ test_main.py          # Tests for main functions
+├─ venv/                     # Python virtual environment
+├─ .gitignore
+├─ main.py                   # Terminal UI entrypoint
+├─ README.md                 # Project documentation
+└─ requirements.txt          # Python dependencies
+
+
 ```
 
 ---
 
 ## Testing
-Unit tests are included in `tests/test.py`. To run the tests:  
+Unit tests are included in the `tests/` folder to ensure the core functionality of the project works as expected.  
+
+**Test Coverage:**  
+- `test_book_api.py` → tests functions in `book_api.py`, including API responses, error handling, and invalid/empty genre handling.  
+- `test_main.py` → tests main application logic, including user input validation, book fetching, database saving, and backend error handling.  
+
+**To run all tests at once:**  
 ```bash
-python tests/test.py
+python -m unittest discover -s tests -p "test_*.py"
+```
+**To run tests individually:**  
+```bash
+python tests/test_main.py
+
+python tests/test_book_api.py
 ```
 Ensure the virtual environment is active and dependencies are installed. These tests cover core functionalities like book retrieval, API responses, and database interactions.  
 

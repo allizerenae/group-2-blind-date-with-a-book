@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 
+
 def get_assigned_date():
     current_date = date.today()
     return current_date

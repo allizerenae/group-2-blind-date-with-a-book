@@ -12,10 +12,11 @@ class Book:
             "book_title": self.title,
             "author": self.author,
             "genre": self.genre,
-            "assigned_date": self.assigned_date.isoformat(), #convert date to string
-            "deadline": self.deadline.isoformat() #convert date to string
+            "assigned_date": self.assigned_date.isoformat(),
+            "deadline": self.deadline.isoformat()
         }
 
     def __str__(self):
         deadline_str = self.deadline if self.deadline else "No deadline set"
-        return f"'{self.title}' by {self.author} ({self.genre}) — Assigned: {self.assigned_date}, Deadline: {deadline_str}"
+        return f"'{self.title}' by {self.author} ({self.genre}) — Assigned: {self.assigned_date}, " \
+               f"Deadline: {deadline_str}"

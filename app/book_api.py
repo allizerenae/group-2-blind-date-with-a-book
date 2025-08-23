@@ -19,17 +19,17 @@ def get_random_book_by_genre(subject):
     if subject == "random":
         subject = get_random_genre()
 
-    url = f"https://openlibrary.org/subjects/{subject}.json?languages=eng"
+    url = f"https://openlibrary.org/subjects/{subject}.json?languages=eng" # Url to return only books in English
 
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
     except requests.RequestException:
-        return {'error': 'Network or API error'}
+        return {'ERROR': 'Network or API error'}
 
     total_books = response.json().get('work_count', 0)
     if total_books == 0:
-        return {'error': 'No books found in this genre'}
+        return {'ERROR': 'No books found in this genre'}
 
     # Choose a random selection
     selection = random.randint(0, max(0, total_books - 1))
@@ -40,11 +40,11 @@ def get_random_book_by_genre(subject):
         book_response = requests.get(book_url, timeout=10)
         book_response.raise_for_status()
     except requests.RequestException:
-        return {'error': 'Network or API error'}
+        return {'ERROR': 'Network or API error'}
 
     book_data = book_response.json().get('works', [])
     if not book_data:
-        return {'error': 'No books found'}
+        return {'ERROR': 'No books found'}
 
     book = book_data[0]
     title = book.get('title', 'Unknown Title')
@@ -58,10 +58,11 @@ def get_random_book_by_genre(subject):
         'genre': subject,
     }
 
+
 if __name__ == '__main__':
-    print("TESTING BOOK_API")
-    # This is for testing purposes
-    #genre = input("Which genre would you like? ")
-    #print(get_random_book_by_genre(genre))
+    print("=== TESTING ===")
+    print(get_random_book_by_genre("random"))
+
+
 
 

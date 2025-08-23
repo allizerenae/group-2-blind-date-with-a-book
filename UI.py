@@ -6,23 +6,33 @@ class UIDatabaseClass:
 
     # UI database class attributes
     def __init__(self, base_url = "http://127.0.0.1:5000"):
-        self.base_url = base_url
+        self._base_url = base_url
+
+    #Getter for protected instance
+    def get_base_url(self):
+        return self._base_url
+
+    #Setter for protected instance
+    def set_base_url (self, new_value):
+        if new_value != "http://127.0.0.1:5000":
+            raise ValueError("base_url cannot be changed")
+        self._base_url = new_value
 
     # Get new book and save to database
     def add_new_book_to_database_UI(self, book_data):
-        endpoint1  = f"{self.base_url}/books/add"
+        endpoint1  = f"{self.get_base_url()}/books/add"
         response = requests.post(endpoint1, headers={'content-type':'application/json'},data=json.dumps(book_data))
         return response.json()
 
     # Function to view current book and deadline
     def view_current_book_UI(self):
-        endpoint2 = f"{self.base_url}/books/current"
+        endpoint2 = f"{self.get_base_url()}/books/current"
         current_book_data = requests.get(endpoint2)
         return current_book_data.json()
 
     # Function to view all books in the database (incl. current book)
     def view_all_books_UI(self):
-        endpoint3 = f"{self.base_url}/books"
+        endpoint3 = f"{self.get_base_url()}/books"
         view_all_books_data = requests.get(endpoint3)
         return view_all_books_data.json()
 
@@ -90,7 +100,20 @@ if __name__ == '__main__':
         # print("Test 5: Testing view all books...")
         # print(ui_db.view_all_books_UI())
 
+        # Check base url
+        # db = UIDatabaseClass()
+        # print("Base URL:", db.get_base_url())
+        #
+        # # #try to change base url
+        # db = UIDatabaseClass()
+        # try:
+        #     db.set_base_url("http://fake_site.com")
+        # except ValueError as e:
+        #     print("Unsuccessful:", e)
+
     except Exception as e:
         print("Unsuccessful:", e)
+
+
 
 

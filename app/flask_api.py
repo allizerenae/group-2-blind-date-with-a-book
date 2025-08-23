@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from db_utils import view_all_books_db, view_latest_book_db, add_new_book_db
+from app.db_utils import view_all_books_db, view_latest_book_db, add_new_book_db
 
 app = Flask(__name__)
 

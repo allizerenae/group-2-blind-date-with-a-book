@@ -66,6 +66,33 @@ class UIClass:
 if __name__ == '__main__':
     try:
         print("TESTING")
+
+        # Create instances
+        # ui_db = UIDatabaseClass()
+        # ui = UIClass("Test User", "Romance")
+
+        # Test 1: Welcome message
+        # print("Test 1: Displaying welcome message...")
+        # print(ui.welcome(), "\n")
+
+        # Test 2: Display options menu
+        # print("Test 2: Displaying options menu...")
+        # ui.display_options()
+        # print()
+
+        # Test 3: Display genres menu
+        # print("Test 3: Displaying genres menu...")
+        # ui.display_genres()
+        # print()
+
+        # Test 4: View current books - Flask must be running
+        # print("Test 4: Testing view current book...")
+        # print(ui_db.view_current_book_UI(), "\n")
+
+        # Test 5: View all books - Flask must be running
+        # print("Test 5: Testing view all books...")
+        # print(ui_db.view_all_books_UI())
+
     except Exception as e:
         print("Unsuccessful:", e)
 

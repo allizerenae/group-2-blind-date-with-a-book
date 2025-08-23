@@ -51,7 +51,7 @@ pip install -r requirements.txt
 ```
 
 ### 4) Update Config file
-Update `config.py` with your database credentials:
+Update `database/config.py` with your database credentials:
 ```ini
 USER = "YOUR USERNAME"
 PASSWORD = "YOUR PASSWORD"
@@ -60,14 +60,14 @@ DATABASE = "LibraryDB"
 ```
 
 ### 5) Set up the database
-- Open your MySQL terminal and run the provided SQL script (`database_setup.sql`) to create the required
+- Open your MySQL terminal and run the provided SQL script (`database/database_setup.sql`) to create the required
 database ('LibraryDB') and tables.
 
 
 ### 6) Run the app
 ```bash
 # Start the Flask API
-python flask_api.py
+python app/flask_api.py
 
 # Start the main app
 python main.py
@@ -95,28 +95,33 @@ Now interact with the terminal-based user interface.
 ## Project Structure  
 ```
 group-2-blind-date-with-a-book/
-├─ venv/                  # Python virtual environment
+├─ venv/                     # Python virtual environment
 ├─ .gitignore
-├─ book.py                # Book logic
-├─ book_api.py            # API helper functions
-├─ config.py              # Database configuration
-├─ database_setup.sql     # SQL script to create DB and tables
-├─ db_utils.py            # Database helper functions
-├─ deadline.py            # Deadline management
-├─ flask_api.py           # Flask API server
-├─ main.py                # Terminal UI entrypoint
-├─ UI.py                  # Terminal UI logic
-├─ requirements.txt       # Python dependencies
-├─ test.py                # Unit tests
-└─ README.md              # Documentation
+├─ README.md                 # Project documentation
+├─ requirements.txt          # Python dependencies
+├─ database/
+│   ├─ database_setup.sql    # SQL script to create DB and tables
+│   └─ config.py             # Database configuration
+├─ app/                      # Source code for the project
+│   ├─ __init__.py
+│   ├─ book.py               # Book logic
+│   ├─ book_api.py           # API helper functions
+│   ├─ db_utils.py           # Database helper functions
+│   ├─ deadline.py           # Deadline management
+│   ├─ flask_api.py          # Flask API server
+│   └─ ui.py                 # Terminal UI logic (renamed to lowercase)
+├─ tests/                    # Unit tests
+│   ├─ __init__.py
+│   └─ test.py               # Tests for main functions
+└─ main.py                   # Terminal UI entrypoint
 ```
 
 ---
 
 ## Testing
-Unit tests are included in `test.py`. To run the tests:  
+Unit tests are included in `tests/test.py`. To run the tests:  
 ```bash
-python test.py
+python tests/test.py
 ```
 Ensure the virtual environment is active and dependencies are installed. These tests cover core functionalities like book retrieval, API responses, and database interactions.  
 

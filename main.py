@@ -1,7 +1,9 @@
-from UI import UIClass, UIDatabaseClass
-from book_api import get_random_book_by_genre
-from book import Book
-from deadline import get_assigned_date, get_deadline
+import requests.exceptions
+
+from app.ui import UIClass, UIDatabaseClass
+from app.book_api import get_random_book_by_genre
+from app.book import Book
+from app.deadline import get_assigned_date, get_deadline
 
 
 def get_valid_choice(prompt, valid_options):
@@ -11,6 +13,16 @@ def get_valid_choice(prompt, valid_options):
         if choice not in valid_options:
             print(f"Invalid choice. Please enter one of: {', '.join(valid_options)}.")
     return choice
+
+
+def handle_backend_error(error):
+    """Handles errors when connecting to or saving to the database"""
+    if isinstance(error, requests.exceptions.RequestException):
+        print("ERROR: Could not connect to the backend server.")
+        print("Please make sure your Flask API is running at http://127.0.0.1:5000/")
+    else:
+        print(f"ERROR: Something went wrong while saving to the database. Details: {error}")
+
 
 def fetch_and_save_book(ui, ui_db):
     ui.display_genres()
@@ -28,20 +40,31 @@ def fetch_and_save_book(ui, ui_db):
         get_deadline()
     )
     print("\nHere’s your blind date book:\n", book)
-    ui_db.add_new_book_to_database_UI (book.to_dict())
-    print("Book saved to your reading list.")
+
+    try:
+        if ui_db.add_new_book_to_database_UI(book.to_dict()):
+            print("Book saved to your reading list.")
+
+    except Exception as e:
+        handle_backend_error(e)
+
 
 def view_books(ui_db, option):
-    data = {
-        "B": ui_db.view_current_book_UI(),
-        "C": ui_db.view_all_books_UI()
-    }[option]
-    print("\nBooks:\n")
-    if isinstance(data, list):
-        for b in data:
-            print(b)
-    else:
-        print(data)
+    try:
+        data = {
+            "B": ui_db.view_current_book_UI(),
+            "C": ui_db.view_all_books_UI()
+        }[option]
+        print("\nBooks:\n")
+        if isinstance(data, list):
+            for b in data:
+                print(b)
+        else:
+            print(data)
+
+    except Exception as e:
+        handle_backend_error(e)
+
 
 def main():
     username = input("Hello! Please tell me your name: ").strip().capitalize() or "Reader"
@@ -64,6 +87,6 @@ def main():
             print("Goodbye and happy reading!")
             break
 
+
 if __name__ == "__main__":
     main()
-

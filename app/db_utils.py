@@ -1,13 +1,13 @@
 import mysql.connector
-from config import USER, PASSWORD, HOST, DATABASE
+from database.config import USER, PASSWORD, HOST, DATABASE
+
 
 class DbConnectionError(Exception):
     pass
 
+
 def _connect_to_db():
-    """
-    Connect to MySQL database. Uses mysql_native_password for local testing.
-    """
+    """Connect to MySQL database. Uses mysql_native_password for local testing"""
     cnx = mysql.connector.connect(
         host=HOST,
         user=USER,
@@ -20,8 +20,8 @@ def _connect_to_db():
     return cnx
 
 
-
 def view_all_books_db():
+    """Interacts with SQL database to view all saved books"""
     db_connection = None
     try:
         db_connection = _connect_to_db()
@@ -40,16 +40,9 @@ def view_all_books_db():
             db_connection.close()
             print("DB connection is closed")
 
-def view_latest_book_db():
-    cnx = mysql.connector.connect(
-        host=HOST,
-        user=USER,
-        password=PASSWORD,
-        database=DATABASE,
-        port=3306,
-        auth_plugin='caching_sha2_password'
-    )
 
+def view_latest_book_db():
+    """Interacts with SQL database to view latest saved book and deadline"""
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
@@ -67,7 +60,9 @@ def view_latest_book_db():
             db_connection.close()
             print("DB connection is closed")
 
+
 def add_new_book_db(new_book_dict):
+    """Interacts with SQL database to add new book details"""
     db_connection = None  # fix UnboundLocalError
     try:
         db_connection = _connect_to_db()
@@ -101,11 +96,12 @@ def add_new_book_db(new_book_dict):
             db_connection.close()
             print("DB connection is closed")
 
-if __name__ == "__main__":
-    try:
-        cnx = _connect_to_db()
-        print("Connected successfully")
-        cnx.close()
-    except Exception as e:
-        print("Connection failed:", e)
 
+# if __name__ == "__main__":
+#     # FOR TESTING
+#     try:
+#         cnx = _connect_to_db()
+#         print("Connected successfully")
+#         cnx.close()
+#     except Exception as e:
+#         print("Connection failed:", e)

@@ -51,7 +51,7 @@ pip install -r requirements.txt
 ```
 
 ### 4) Update Config file
-Update `config.py` with your database credentials:
+Update `database/config.py` with your database credentials:
 ```ini
 USER = "YOUR USERNAME"
 PASSWORD = "YOUR PASSWORD"
@@ -60,14 +60,14 @@ DATABASE = "LibraryDB"
 ```
 
 ### 5) Set up the database
-- Open your MySQL terminal and run the provided SQL script (`database_setup.sql`) to create the required
+- Open your MySQL terminal and run the provided SQL script (`database/database_setup.sql`) to create the required
 database ('LibraryDB') and tables.
 
 
 ### 6) Run the app
 ```bash
 # Start the Flask API
-python flask_api.py
+python app/flask_api.py
 
 # Start the main app
 python main.py
@@ -79,7 +79,7 @@ Now interact with the terminal-based user interface.
 ## API Endpoints
 - `GET /books` → returns all books in the database  
 - `GET /books/current` → returns the most recent book in the database  
-- `GET /books/add` → adds a new book to the database
+- `POST /books/add` → adds a new book to the database
 
 **Example response**
 ```json
@@ -95,28 +95,48 @@ Now interact with the terminal-based user interface.
 ## Project Structure  
 ```
 group-2-blind-date-with-a-book/
-├─ venv/                  # Python virtual environment
+├─ app/                      # Source code for the project
+│   ├─ __init__.py
+│   ├─ book.py               # Book logic
+│   ├─ book_api.py           # API helper functions
+│   ├─ db_utils.py           # Database helper functions
+│   ├─ deadline.py           # Deadline management
+│   ├─ flask_api.py          # Flask API server
+│   └─ ui.py                 # Terminal UI logic
+├─ database/
+│   ├─ database_setup.sql    # SQL script to create DB and tables
+│   └─ config.py             # Database configuration
+├─ tests/                    # Unit tests
+│   ├─ __init__.py
+│   ├─ test_book_api.py      # Tests for API functions
+│   └─ test_main.py          # Tests for main functions
+├─ venv/                     # Python virtual environment
 ├─ .gitignore
-├─ book.py                # Book logic
-├─ book_api.py            # API helper functions
-├─ config.py              # Database configuration
-├─ database_setup.sql     # SQL script to create DB and tables
-├─ db_utils.py            # Database helper functions
-├─ deadline.py            # Deadline management
-├─ flask_api.py           # Flask API server
-├─ main.py                # Terminal UI entrypoint
-├─ UI.py                  # Terminal UI logic
-├─ requirements.txt       # Python dependencies
-├─ test.py                # Unit tests
-└─ README.md              # Documentation
+├─ main.py                   # Terminal UI entrypoint
+├─ README.md                 # Project documentation
+└─ requirements.txt          # Python dependencies
+
+
 ```
 
 ---
 
 ## Testing
-Unit tests are included in `test.py`. To run the tests:  
+Unit tests are included in the `tests/` folder to ensure the core functionality of the project works as expected.  
+
+**Test Coverage:**  
+- `test_book_api.py` → tests functions in `book_api.py`, including API responses, error handling, and invalid/empty genre handling.  
+- `test_main.py` → tests main application logic, including user input validation, book fetching, database saving, and backend error handling.  
+
+**To run all tests at once:**  
 ```bash
-python test.py
+python -m unittest discover -s tests -p "test_*.py"
+```
+**To run tests individually:**  
+```bash
+python tests/test_main.py
+
+python tests/test_book_api.py
 ```
 Ensure the virtual environment is active and dependencies are installed. These tests cover core functionalities like book retrieval, API responses, and database interactions.  
 
@@ -140,7 +160,7 @@ Developed by **Group 2 – Code First Girls CFGdegree**
 - Debbie Richford
 - Allize Renae
 - Maisie Pepper
-- Kav Ravikumar
+- Kaveyah Ravikumar
 - Nemi Imoh
 - Janine O'Connor
 

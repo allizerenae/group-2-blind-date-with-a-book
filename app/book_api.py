@@ -59,10 +59,7 @@ def get_random_book_by_genre(subject):
     }
 
 
-if __name__ == '__main__':
-    print("=== TESTING ===")
-    print(get_random_book_by_genre("random"))
-
-
-
-
+# if __name__ == '__main__':
+#     # FOR TESTING
+#     print("=== TESTING ===")
+#     print(get_random_book_by_genre("random"))

@@ -43,6 +43,7 @@ def view_all_books_db():
 
 def view_latest_book_db():
     """Interacts with SQL database to view latest saved book and deadline"""
+    db_connection = None
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
@@ -97,11 +98,10 @@ def add_new_book_db(new_book_dict):
             print("DB connection is closed")
 
 
-# if __name__ == "__main__":
-#     # FOR TESTING
-#     try:
-#         cnx = _connect_to_db()
-#         print("Connected successfully")
-#         cnx.close()
-#     except Exception as e:
-#         print("Connection failed:", e)
+if __name__ == "__main__":
+    try:
+        cnx = _connect_to_db()
+        print("Connected successfully")
+        cnx.close()
+    except Exception as e:
+       print("Connection failed:", e)

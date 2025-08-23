@@ -145,7 +145,7 @@ Developed by **Group 2 – Code First Girls CFGdegree**
 - Debbie Richford
 - Allize Renae
 - Maisie Pepper
-- Kav Ravikumar
+- Kaveyah Ravikumar
 - Nemi Imoh
 - Janine O'Connor
 

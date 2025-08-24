@@ -13,12 +13,6 @@ class UIDatabaseClass:
     def get_base_url(self):
         return self._base_url
 
-    # Setter for protected instance (to prevent accidental changes to base url)
-    def set_base_url(self, new_value):
-        if new_value != "http://127.0.0.1:5000":
-            raise ValueError("base_url cannot be changed")
-        self._base_url = new_value
-
     # Get new book and save to database
     def add_new_book_to_database_ui(self, book_data):
         endpoint1 = f"{self.get_base_url()}/books/add"
@@ -107,13 +101,6 @@ class UIClass:
 #         # Check base url
 #         db = UIDatabaseClass()
 #         print("Base URL:", db.get_base_url())
-#
-#         # try to change base url
-#         db = UIDatabaseClass()
-#         try:
-#             db.set_base_url("http://fake_site.com")
-#         except ValueError as e:
-#             print("Unsuccessful:", e)
 #
 #     except Exception as e:
 #         print("Unsuccessful:", e)
